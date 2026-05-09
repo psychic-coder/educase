@@ -1,8 +1,8 @@
 const pool = require('../config/db');
 
-// Haversine formula to calculate distance between two points
+
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-    const R = 6371; // Radius of the earth in km
+    const R = 6371; 
     const dLat = deg2rad(lat2 - lat1);
     const dLon = deg2rad(lon2 - lon1);
     const a =
@@ -10,7 +10,7 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
         Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
         Math.sin(dLon / 2) * Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const d = R * c; // Distance in km
+    const d = R * c; 
     return d;
 }
 
@@ -53,7 +53,7 @@ exports.listSchools = async (req, res) => {
     try {
         let { latitude, longitude } = req.query;
 
-        // Validation
+        
         if (latitude === undefined || longitude === undefined) {
             return res.status(400).json({ error: 'Latitude and longitude are required query parameters.' });
         }
@@ -77,7 +77,7 @@ exports.listSchools = async (req, res) => {
             return { ...school, distance };
         });
 
-        // Sort nearest first
+      
         schoolsWithDistance.sort((a, b) => a.distance - b.distance);
 
         return res.status(200).json(schoolsWithDistance);

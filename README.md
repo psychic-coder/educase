@@ -4,7 +4,7 @@ A simple, scalable, and maintainable REST API for school management built with N
 
 ## Live API
 
-> Replace with your deployed URL after deployment.
+> https://educase-yn9b.onrender.com
 
 ## Tech Stack
 
@@ -32,17 +32,21 @@ educase/
 ## Local Setup
 
 1. **Install dependencies:**
+
    ```bash
    npm install
    ```
 
 2. **Configure environment variables:**
+
    ```bash
    cp .env.example .env
    ```
+
    Fill in your MySQL credentials in `.env`.
 
 3. **Start in development mode:**
+
    ```bash
    npm run dev
    ```
@@ -54,50 +58,61 @@ educase/
 
 ## Environment Variables
 
-| Variable      | Description                  | Example                        |
-|---------------|------------------------------|--------------------------------|
-| `DB_HOST`     | MySQL host                   | `mysql-xxx.aivencloud.com`     |
-| `DB_USER`     | MySQL username               | `avnadmin`                     |
-| `DB_PASSWORD` | MySQL password               | `your_password`                |
-| `DB_NAME`     | Database name                | `defaultdb`                    |
-| `DB_PORT`     | MySQL port                   | `13833`                        |
-| `PORT`        | API server port              | `3000`                         |
+| Variable      | Description     | Example                    |
+| ------------- | --------------- | -------------------------- |
+| `DB_HOST`     | MySQL host      | `mysql-xxx.aivencloud.com` |
+| `DB_USER`     | MySQL username  | `avnadmin`                 |
+| `DB_PASSWORD` | MySQL password  | `your_password`            |
+| `DB_NAME`     | Database name   | `defaultdb`                |
+| `DB_PORT`     | MySQL port      | `13833`                    |
+| `PORT`        | API server port | `3000`                     |
 
 ## API Endpoints
 
 ### Health Check
+
 ```
 GET /health
 ```
+
 Response:
+
 ```json
 { "status": "ok", "timestamp": "2026-05-09T00:00:00.000Z" }
 ```
 
 ### Add a School
+
 ```
 POST /addSchool
 Content-Type: application/json
 ```
+
 Request Body:
+
 ```json
 {
   "name": "Delhi Public School",
   "address": "Mathura Road, New Delhi",
   "latitude": 28.5562,
-  "longitude": 77.2410
+  "longitude": 77.241
 }
 ```
+
 Response (`201 Created`):
+
 ```json
 { "message": "School added successfully", "schoolId": 1 }
 ```
 
 ### List Schools by Proximity
+
 ```
 GET /listSchools?latitude=28.7041&longitude=77.1025
 ```
+
 Response (`200 OK`):
+
 ```json
 [
   {
@@ -105,11 +120,12 @@ Response (`200 OK`):
     "name": "Delhi Public School",
     "address": "Mathura Road, New Delhi",
     "latitude": 28.5562,
-    "longitude": 77.2410,
+    "longitude": 77.241,
     "distance": 12.34
   }
 ]
 ```
+
 Schools are sorted nearest-first based on the Haversine formula.
 
 ## Deploying to Render

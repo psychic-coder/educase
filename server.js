@@ -4,7 +4,7 @@ const pool = require('./src/config/db');
 
 const PORT = process.env.PORT || 3000;
 
-// Test DB Connection
+
 pool.getConnection()
     .then(connection => {
         console.log('Successfully connected to the database.');
