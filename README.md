@@ -1,60 +1,124 @@
 # School Management API
 
-A simple, scalable, and maintainable Node.js + Express.js API backend for school management using MySQL.
+A simple, scalable, and maintainable REST API for school management built with Node.js, Express.js, and MySQL.
 
-## Features
+## Live API
 
-- **Add School:** `POST /addSchool` - Add a new school with name, address, latitude, and longitude.
-- **List Schools:** `GET /listSchools` - Fetch all schools sorted by geographic proximity to user-provided coordinates using the Haversine formula.
+> Replace with your deployed URL after deployment.
 
-## Prerequisites
+## Tech Stack
 
-- Node.js (v14 or higher)
-- MySQL Server
+- **Runtime:** Node.js
+- **Framework:** Express.js
+- **Database:** MySQL (hosted on Aiven)
+- **Packages:** `mysql2`, `dotenv`
 
-## Setup Instructions
+## Project Structure
 
-1. **Clone or Download the Project:**
-   Ensure you are in the project root folder.
+```
+educase/
+├── src/
+│   ├── config/
+│   │   └── db.js           # MySQL connection pool
+│   ├── controllers/
+│   │   └── schoolController.js  # Route logic + Haversine formula
+│   └── routes/
+│       └── schoolRoutes.js      # API routes
+├── server.js               # Entry point
+├── .env.example            # Environment variable template
+└── package.json
+```
 
-2. **Install Dependencies:**
+## Local Setup
+
+1. **Install dependencies:**
    ```bash
    npm install
    ```
 
-3. **Database Setup:**
-   Run the provided `schema.sql` script in your MySQL instance to create the database and table:
-   ```bash
-   mysql -u root -p < schema.sql
-   ```
-
-4. **Environment Configuration:**
-   Copy the `.env.example` file to a new file named `.env`:
+2. **Configure environment variables:**
    ```bash
    cp .env.example .env
    ```
-   Open the `.env` file and update it with your actual MySQL credentials:
-   ```env
-   DB_HOST=localhost
-   DB_USER=root
-   DB_PASSWORD=yourpassword
-   DB_NAME=school_management
-   PORT=3000
-   ```
+   Fill in your MySQL credentials in `.env`.
 
-5. **Start the Server:**
+3. **Start in development mode:**
    ```bash
-   node server.js
+   npm run dev
    ```
 
-## Hosting Instructions
+4. **Start in production mode:**
+   ```bash
+   npm start
+   ```
 
-To deploy this API to a hosting provider (like Render, Heroku, or DigitalOcean):
-1. Provision a MySQL database instance.
-2. Configure the environment variables (`DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `PORT`) in the hosting provider's dashboard.
-3. Define your start command as `node server.js`.
-4. Deploy your code.
+## Environment Variables
 
-## Postman Collection
+| Variable      | Description                  | Example                        |
+|---------------|------------------------------|--------------------------------|
+| `DB_HOST`     | MySQL host                   | `mysql-xxx.aivencloud.com`     |
+| `DB_USER`     | MySQL username               | `avnadmin`                     |
+| `DB_PASSWORD` | MySQL password               | `your_password`                |
+| `DB_NAME`     | Database name                | `defaultdb`                    |
+| `DB_PORT`     | MySQL port                   | `13833`                        |
+| `PORT`        | API server port              | `3000`                         |
 
-A `postman_collection.json` file is included. You can import this into Postman to easily test the `POST /addSchool` and `GET /listSchools` endpoints.
+## API Endpoints
+
+### Health Check
+```
+GET /health
+```
+Response:
+```json
+{ "status": "ok", "timestamp": "2026-05-09T00:00:00.000Z" }
+```
+
+### Add a School
+```
+POST /addSchool
+Content-Type: application/json
+```
+Request Body:
+```json
+{
+  "name": "Delhi Public School",
+  "address": "Mathura Road, New Delhi",
+  "latitude": 28.5562,
+  "longitude": 77.2410
+}
+```
+Response (`201 Created`):
+```json
+{ "message": "School added successfully", "schoolId": 1 }
+```
+
+### List Schools by Proximity
+```
+GET /listSchools?latitude=28.7041&longitude=77.1025
+```
+Response (`200 OK`):
+```json
+[
+  {
+    "id": 1,
+    "name": "Delhi Public School",
+    "address": "Mathura Road, New Delhi",
+    "latitude": 28.5562,
+    "longitude": 77.2410,
+    "distance": 12.34
+  }
+]
+```
+Schools are sorted nearest-first based on the Haversine formula.
+
+## Deploying to Render
+
+1. Push your code to GitHub.
+2. Go to [Render](https://render.com) → **New Web Service**.
+3. Connect your GitHub repo.
+4. Set:
+   - **Build Command:** `npm install`
+   - **Start Command:** `npm start`
+5. Add all environment variables from `.env.example` in the **Environment** tab.
+6. Deploy!
