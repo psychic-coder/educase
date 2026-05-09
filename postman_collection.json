@@ -1,0 +1,68 @@
+{
+	"info": {
+		"_postman_id": "402eabdf-01d0-40db-91d1-6789f2dc24b3",
+		"name": "School Management API",
+		"description": "API collection for School Management Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add School",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Springfield Elementary\",\n    \"address\": \"123 Fake Street, Springfield\",\n    \"latitude\": 39.7817,\n    \"longitude\": -89.6501\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/addSchool",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"addSchool"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Schools",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/listSchools?latitude=39.7800&longitude=-89.6500",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"listSchools"
+					],
+					"query": [
+						{
+							"key": "latitude",
+							"value": "39.7800"
+						},
+						{
+							"key": "longitude",
+							"value": "-89.6500"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
